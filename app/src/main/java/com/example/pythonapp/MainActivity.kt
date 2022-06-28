@@ -73,12 +73,12 @@ fun MessageCard(message: Message) {
             )
             Spacer(modifier = Modifier.width(8.dp))
 
-            var isExpanded by remember { mutableStateOf(false) }
+            val isExpanded = remember { mutableStateOf(false) }
             val surfaceColor by animateColorAsState(
-                targetValue = if (isExpanded) MaterialTheme.colors.primary else MaterialTheme.colors.surface
+                targetValue = if (isExpanded.value) MaterialTheme.colors.primary else MaterialTheme.colors.surface
             )
 
-            Column(modifier = Modifier.clickable { isExpanded = !isExpanded }) {
+            Column(modifier = Modifier.clickable { isExpanded.value = !isExpanded.value }) {
                 Text(
                     text = message.author,
                     color = MaterialTheme.colors.secondaryVariant,
@@ -94,7 +94,7 @@ fun MessageCard(message: Message) {
                     Text(
                         text = message.body,
                         modifier = Modifier.padding(all = 4.dp),
-                        maxLines = if (isExpanded) Int.MAX_VALUE else 1,
+                        maxLines = if (isExpanded.value) Int.MAX_VALUE else 1,
                         style = MaterialTheme.typography.body2,
                     )
                 }
