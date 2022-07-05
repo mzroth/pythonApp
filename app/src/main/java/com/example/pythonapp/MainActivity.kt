@@ -30,91 +30,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PythonAppTheme {
-                Conversation(
-                    messages = SampleData.conversationSample
-                )
+
             }
         }
     }
 }
 
-data class Message(
-    val author: String,
-    val body: String,
-)
 
-@Composable
-fun Conversation(messages: List<Message>) {
-    LazyColumn {
-        items(messages) { message ->
-            MessageCard(message = message)
-        }
-    }
-}
-
-@Composable
-fun MessageCard(message: Message) {
-    PythonAppTheme {
-        Row(
-            modifier = Modifier
-                .padding(all = 8.dp)
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.profile_picture),
-                contentDescription = "Contact profile picture",
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(CircleShape)
-                    .border(
-                        width = 1.5.dp,
-                        color = MaterialTheme.colors.secondary,
-                        shape = CircleShape,
-                    )
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-
-            val isExpanded = remember { mutableStateOf(false) }
-            val surfaceColor by animateColorAsState(
-                targetValue = if (isExpanded.value) MaterialTheme.colors.primary else MaterialTheme.colors.surface
-            )
-
-            Column(modifier = Modifier.clickable { isExpanded.value = !isExpanded.value }) {
-                Text(
-                    text = message.author,
-                    color = MaterialTheme.colors.secondaryVariant,
-                    style = MaterialTheme.typography.subtitle2,
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Surface(
-                    shape = MaterialTheme.shapes.medium,
-                    elevation = 1.dp,
-                    color = surfaceColor,
-                    modifier = Modifier.animateContentSize().padding(1.dp)
-                ) {
-                    Text(
-                        text = message.body,
-                        modifier = Modifier.padding(all = 4.dp),
-                        maxLines = if (isExpanded.value) Int.MAX_VALUE else 1,
-                        style = MaterialTheme.typography.body2,
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Preview(
-    showBackground = true,
-    name = "Light Mode"
-)
-@Preview(
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true,
-    name = "Dark Mode"
-)
-@Composable
-fun PreviewMessageCard() {
-    PythonAppTheme {
-        Conversation(messages = SampleData.conversationSample)
-    }
-}
