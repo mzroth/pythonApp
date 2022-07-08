@@ -1,5 +1,6 @@
 package com.example.pythonapp.ui.compose
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -35,8 +36,9 @@ fun HomeScreen(modifier: Modifier = Modifier) {
     }
 }
 
-@Preview
 @Composable
+@Preview(name = "Home screen")
+@Preview(name = "Home screen dark mode", uiMode = UI_MODE_NIGHT_YES)
 fun PreviewHome() {
     PythonAppTheme {
         HomeScreen()
